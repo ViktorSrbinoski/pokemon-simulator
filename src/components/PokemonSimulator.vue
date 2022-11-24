@@ -94,6 +94,7 @@
         },
         data() {
             return {
+                serverHost: "https://viktor-srbinoski-pokemon-api.herokuapp.com",
                 pokemon1: null,
                 pokemon2: null,
                 allPokemon: [],
@@ -125,7 +126,7 @@
         methods: {
             getAllPokemon() {
                 console.log("getting all pokemon")
-                fetch("http://localhost:9990/pokemon", {
+                fetch(this.serverHost + "/pokemon", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -140,7 +141,7 @@
             },
             getAllMoves() {
                 console.log("getting all moves")
-                fetch("http://localhost:9990/moves", {
+                fetch(this.serverHost + "/moves", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -154,7 +155,7 @@
                     })
             },
             updatePokemon1() {
-                fetch("http://localhost:9990/pokemon/" + this.pokemon1, {
+                fetch(this.serverHost + "/pokemon/" + this.pokemon1, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -173,7 +174,7 @@
                     })
             },
             updatePokemon2() {
-                fetch("http://localhost:9990/pokemon/" + this.pokemon2, {
+                fetch(this.serverHost + "/pokemon/" + this.pokemon2, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -213,7 +214,7 @@
                 }
             },
             attackSequencePokemon1First() {
-                fetch("http://localhost:9990/damage/" + this.pokemon2 + "/" + this.pokemon1 + "/" + this.move1, {
+                fetch(this.serverHost + "/damage/" + this.pokemon2 + "/" + this.pokemon1 + "/" + this.move1, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -226,7 +227,7 @@
                             this.pokemon2CurrentHP = 0
                         } else {
                             this.pokemon2CurrentHP -= Number(data)
-                            fetch("http://localhost:9990/damage/" + this.pokemon1 + "/" + this.pokemon2 + "/" + this.move2, {
+                            fetch(this.serverHost + "/damage/" + this.pokemon1 + "/" + this.pokemon2 + "/" + this.move2, {
                                 method: 'GET',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -245,7 +246,7 @@
                     })
             },
             attackSequencePokemon2First() {
-                fetch("http://localhost:9990/damage/" + this.pokemon1 + "/" + this.pokemon2 + "/" + this.move2, {
+                fetch(this.serverHost + "/damage/" + this.pokemon1 + "/" + this.pokemon2 + "/" + this.move2, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -258,7 +259,7 @@
                             this.pokemon1CurrentHP = 0
                         } else {
                             this.pokemon1CurrentHP -= Number(data)
-                            fetch("http://localhost:9990/damage/" + this.pokemon2 + "/" + this.pokemon1 + "/" + this.move1, {
+                            fetch(this.serverHost + "/damage/" + this.pokemon2 + "/" + this.pokemon1 + "/" + this.move1, {
                                 method: 'GET',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -277,7 +278,7 @@
                     })
             },
             updateMove1() {
-                fetch("http://localhost:9990/moves/" + this.move1, {
+                fetch(this.serverHost + "/moves/" + this.move1, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -292,7 +293,7 @@
                     })
             },
             updateMove2() {
-                fetch("http://localhost:9990/moves/" + this.move2, {
+                fetch(this.serverHost + "/moves/" + this.move2, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
