@@ -81,6 +81,7 @@
             </select>
         </div>
         <button class="battle_button" @click="doBattle">Battle!</button>
+        <div class="play_by_play"> <span v-html="playByPlay"></span> </div>
     </div>
 
 </template>
@@ -120,7 +121,8 @@
                 move1: null,
                 move2: null,
                 move1FullData: null,
-                move2FullData: null
+                move2FullData: null,
+                playByPlay: ""
             }
         },
         methods: {
@@ -193,22 +195,29 @@
                     })
             },
             doBattle() {
+                this.playByPlay = ""
                 if (this.pokemon1CurrentHP === 0 || this.pokemon2CurrentHP === 0) {
                     console.log("a pokemon has fainted already")
+                    this.playByPlay += "a pokemon has fainted already<br/>"
                     return 0
                 }
                 if (Number(this.move1FullData.priority) > Number(this.move2FullData.priority)) {
                     console.log("Move 1 has priority")
+                    this.playByPlay += this.move1 +" has priority, " + this.pokemon1 + " will go first<br/>"
                     this.attackSequencePokemon1First()
 
                 } else if (Number(this.move2FullData.priority) > Number(this.move1FullData.priority)) {
                     console.log("Move 2 has priority")
+                    this.playByPlay += this.move2 +" has priority, " + this.pokemon2 + "will go first<br/>"
                     this.attackSequencePokemon2First()
                 } else {
-                    console.log("Moves have equal priority, faster pokemon will attack first")
+                    console.log("Moves have equal priority, faster pokemon will attack first<br/>")
+                    this.playByPlay += "Moves have equal priority, the faster pokemon will attack first<br/>"
                     if (this.pokemon1Speed >= this.pokemon2Speed) {
+                        this.playByPlay += this.pokemon1 + " is faster<br/>"
                         this.attackSequencePokemon1First()
                     } else {
+                        this.playByPlay += this.pokemon2 + " is faster<br/>"
                         this.attackSequencePokemon2First()
                     }
                 }
@@ -224,6 +233,7 @@
                     .then(data => {
                         if (Number(data) >= this.pokemon2CurrentHP) {
                             console.log(this.pokemon2 + " fainted")
+                            this.playByPlay += this.pokemon2 + " fainted<br/>"
                             this.pokemon2CurrentHP = 0
                         } else {
                             this.pokemon2CurrentHP -= Number(data)
@@ -237,6 +247,7 @@
                                 .then(data => {
                                     if (Number(data) >= this.pokemon1CurrentHP) {
                                         console.log(this.pokemon1 + " fainted")
+                                        this.playByPlay += this.pokemon1 + " fainted<br/>"
                                         this.pokemon1CurrentHP = 0
                                     } else {
                                         this.pokemon1CurrentHP -= Number(data)
@@ -256,6 +267,7 @@
                     .then(data => {
                         if (Number(data) >= this.pokemon1CurrentHP) {
                             console.log(this.pokemon1 + " fainted")
+                            this.playByPlay += this.pokemon1 + " fainted<br/>"
                             this.pokemon1CurrentHP = 0
                         } else {
                             this.pokemon1CurrentHP -= Number(data)
@@ -269,6 +281,7 @@
                                 .then(data => {
                                     if (Number(data) >= this.pokemon2CurrentHP) {
                                         console.log(this.pokemon2 + " fainted")
+                                        this.playByPlay += this.pokemon2 + " fainted<br/>"
                                         this.pokemon2CurrentHP = 0
                                     } else {
                                         this.pokemon2CurrentHP -= Number(data)
@@ -399,5 +412,12 @@
         margin-top: 10px;
         font-family: Tahoma;
         font-size: large;
+    }
+
+    .play_by_play {
+        width: 50%;
+        margin: auto;
+        padding-top: 10px;
+        text-align: center;
     }
 </style>
